@@ -2,6 +2,7 @@ const screenshot = require('screenshot-desktop');
 const Tesseract = require('tesseract.js');
 const fs = require('fs');
 const path = require('path');
+const util = require('util');
 
 const dir = path.join(__dirname, 'results/');
 
@@ -14,6 +15,7 @@ screenshot({filename: dir + 'screenshot.jpg'})
                 console.log("OCR: %d paragraphs with %d % confidence.", result.paragraphs.length, result.confidence);
                 fs.writeFileSync(dir + './screenshot.txt', result.text.toString())
                 fs.writeFileSync(dir + './screenshot.html', result.html.toString());
+                fs.writeFileSync(dir + './result.json', JSON.stringify(util.inspect(result)));
             });
     })
     .catch((error) => {
